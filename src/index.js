@@ -1,17 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import { api } from "./state/api";
+import globalReducer from "./state";
 import App from "./App";
+
+const store = configureStore({
+  reducer: {
+    global: globalReducer,
+    [api.reducerPath]: api.reducer,
+  },
+  middleware: (getDefault) => getDefault().concat(api.middleware),
+});
+setupListeners(store.dispatch);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/*" element={<App />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
 );
 
