@@ -10,10 +10,66 @@ export const api = createApi({
       providesTags: ["Products"],
     }),
     getUsers: build.query({
-      query: () => "users",
+      query: ({ pagination, columnFilters, globalFilter, sorting }) => {
+        return `users/?limit=${pagination.pageSize}&page=${
+          pagination.pageIndex
+        }&columnfilter=${columnFilters}&globalfilter=${globalFilter}&columnfilters=${JSON.stringify(
+          columnFilters,
+        )}&sorting=${JSON.stringify(sorting)}`;
+      },
       providesTags: ["Users"],
+    }),
+    getOrders: build.query({
+      query: () => "orders",
+      providesTags: ["Orders"],
+    }),
+    addNewUser: build.mutation({
+      query: (initialUser) => ({
+        url: "users",
+        method: "POST",
+        body: {
+          ...initialUser,
+        },
+      }),
+      invalidatesTags: ["Users"],
+    }),
+    updateUser: build.mutation({
+      query: (initialUser) => ({
+        url: "users",
+        method: "PATCH",
+        body: {
+          ...initialUser,
+        },
+      }),
+      invalidatesTags: ["Users"],
+    }),
+    updateDelivery: build.mutation({
+      query: (initialUser) => ({
+        url: "deliveries",
+        method: "PATCH",
+        body: {
+          ...initialUser,
+        },
+      }),
+      invalidatesTags: ["Users"],
+    }),
+    deleteUser: build.mutation({
+      query: ({ id }) => ({
+        url: `users`,
+        method: "DELETE",
+        body: { id },
+      }),
+      invalidatesTags: ["Users"],
     }),
   }),
 });
 
-export const { useGetProductsQuery, useGetUsersQuery } = api;
+export const {
+  useGetProductsQuery,
+  useGetUsersQuery,
+  useGetOrdersQuery,
+  useAddNewUserMutation,
+  useUpdateUserMutation,
+  useUpdateDeliveryMutation,
+  useDeleteUserMutation,
+} = api;
