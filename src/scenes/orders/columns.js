@@ -30,7 +30,7 @@ function getColumns(data) {
     },
     {
       accessorKey: "orderId",
-      header: "OrderId",
+      header: "Order",
       enableEditing: false, // disable editing on this column
       size: 20,
       Cell: ({ cell }) => {
@@ -43,8 +43,8 @@ function getColumns(data) {
         });
         return (
           <Box>
-            <Typography>{rowNeeded.user.username}</Typography>
-            <Typography>Deposited:{rowNeeded.fundsDeposited}</Typography>
+            <Typography>{rowNeeded?.user?.username}</Typography>
+            <Typography>ID: {rowNeeded?.id}</Typography>
           </Box>
         );
       },

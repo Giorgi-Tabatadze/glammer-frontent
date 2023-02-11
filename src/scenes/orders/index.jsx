@@ -35,6 +35,11 @@ function Orders() {
     });
   }
 
+  const onColumnFiltersChange = (filter) => {
+    setColumnFilters(filter);
+    setPagination({ pageIndex: 0, pageSize: pagination.pageSize });
+  };
+
   const handleDeleteRow = useCallback();
 
   return (
@@ -61,7 +66,7 @@ function Orders() {
               }
             : undefined
         }
-        onColumnFiltersChange={setColumnFilters}
+        onColumnFiltersChange={onColumnFiltersChange}
         onPaginationChange={setPagination}
         onSortingChange={setSorting}
         rowCount={data?.count}
