@@ -13,14 +13,20 @@ export const api = createApi({
       query: ({ pagination, columnFilters, globalFilter, sorting }) => {
         return `users/?limit=${pagination.pageSize}&page=${
           pagination.pageIndex
-        }&columnfilter=${columnFilters}&globalfilter=${globalFilter}&columnfilters=${JSON.stringify(
+        }&globalfilter=${globalFilter}&columnfilters=${JSON.stringify(
           columnFilters,
         )}&sorting=${JSON.stringify(sorting)}`;
       },
       providesTags: ["Users"],
     }),
     getOrders: build.query({
-      query: () => "orders",
+      query: ({ pagination, columnFilters, sorting }) => {
+        return `orders/?limit=${pagination.pageSize}&page=${
+          pagination.pageIndex
+        }&columnfilters=${JSON.stringify(
+          columnFilters,
+        )}&sorting=${JSON.stringify(sorting)}`;
+      },
       providesTags: ["Orders"],
     }),
     addNewUser: build.mutation({

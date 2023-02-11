@@ -8,6 +8,7 @@ import { themeSettings } from "./theme";
 import Layout from "./scenes/layout";
 import Products from "./scenes/products";
 import Users from "./scenes/users";
+import Orders from "./scenes/orders";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -23,6 +24,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/products" element={<Products />} />
               <Route path="/users" element={<Users />} />
+              <Route path="/orders" element={<Orders />} />
             </Route>
           </Routes>
         </ThemeProvider>
