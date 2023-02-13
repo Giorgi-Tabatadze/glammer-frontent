@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { Box, useTheme, IconButton, Tooltip, Button } from "@mui/material";
 import MaterialReactTable from "material-react-table";
 import { Delete, Edit } from "@mui/icons-material";
@@ -23,7 +23,7 @@ function Orders() {
   const { data, isLoading, isError, isRefetching, isSuccess } =
     useGetOrdersQuery({ pagination, columnFilters, sorting });
 
-  const columns = getColumns(data);
+  const columns = useMemo(() => getColumns(data), [data]);
 
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {};
 

@@ -15,7 +15,7 @@ function getColumns(data) {
       header: "Ordered",
       size: 20,
       Cell: ({ cell }) => {
-        if (cell.getValue()) {
+        if (cell?.getValue()) {
           return "true";
         }
         return "false";
@@ -35,9 +35,9 @@ function getColumns(data) {
       size: 20,
       Cell: ({ cell }) => {
         let rowNeeded = "";
-        data.rows.forEach((row) => {
+        data?.rows?.forEach((row) => {
           // eslint-disable-next-line eqeqeq
-          if (row.id === cell.getValue()) {
+          if (row?.id === cell?.getValue()) {
             rowNeeded = row;
           }
         });
@@ -65,7 +65,7 @@ function getColumns(data) {
             maxWidth: { xs: 30, md: 30 },
           }}
           alt="Product Image."
-          src={`${process.env.REACT_APP_BASE_URL}/${cell.getValue()}`}
+          src={`${process.env.REACT_APP_BASE_URL}/${cell?.getValue()}`}
         />
       ),
     },
@@ -89,13 +89,13 @@ function getColumns(data) {
       enableEditing: false,
       AggregatedCell: ({ cell, table }) => {
         let rowNeeded = "";
-        data.rows.forEach((row) => {
+        data?.rows?.forEach((row) => {
           // eslint-disable-next-line eqeqeq
-          if (row.id === cell.row.original.orderId) {
+          if (row?.id === cell?.row?.original?.orderId) {
             rowNeeded = row;
           }
         });
-        return rowNeeded.fundsDeposited;
+        return rowNeeded?.fundsDeposited;
       },
     },
     {
@@ -104,17 +104,17 @@ function getColumns(data) {
       size: 20,
       AggregatedCell: ({ cell, table }) => {
         let totalPrice = 0;
-        cell.row.leafRows.forEach((row) => {
-          if (row.original.differentPrice) {
-            totalPrice += Number(row.original.differentPrice);
+        cell?.row?.leafRows?.forEach((row) => {
+          if (row?.original?.differentPrice) {
+            totalPrice += Number(row?.original?.differentPrice);
           } else {
             totalPrice += Number(row?.original?.product?.price);
           }
         });
-        data.rows.forEach((row) => {
+        data?.rows?.forEach((row) => {
           // eslint-disable-next-line eqeqeq
-          if (row.id === cell.row.original.orderId) {
-            totalPrice += `+${row.deliveryPrice}`;
+          if (row?.id === cell?.row?.original?.orderId) {
+            totalPrice += `+${row?.deliveryPrice}`;
           }
         });
         return totalPrice;
@@ -129,9 +129,9 @@ function getColumns(data) {
 
       AggregatedCell: ({ cell, table }) => {
         let rowNeeded = "";
-        data.rows.forEach((row) => {
+        data?.rows?.forEach((row) => {
           // eslint-disable-next-line eqeqeq
-          if (row.id === cell.row.original.orderId) {
+          if (row?.id === cell?.row?.original?.orderId) {
             rowNeeded = row;
           }
         });
@@ -171,9 +171,9 @@ function getColumns(data) {
       enableEditing: false, // disable editing on this column
       AggregatedCell: ({ cell, table }) => {
         let rowNeeded = "";
-        data.rows.forEach((row) => {
+        data?.rows?.forEach((row) => {
           // eslint-disable-next-line eqeqeq
-          if (row.id === cell.row.original.orderId) {
+          if (row?.id === cell?.row?.original?.orderId) {
             rowNeeded = row;
           }
         });
@@ -189,13 +189,13 @@ function getColumns(data) {
       enableEditing: false, // disable editing on this column
       AggregatedCell: ({ cell, table }) => {
         let rowNeeded = "";
-        data.rows.forEach((row) => {
+        data?.rows?.forEach((row) => {
           // eslint-disable-next-line eqeqeq
-          if (row.id === cell.row.original.orderId) {
+          if (row?.id === cell?.row?.original?.orderId) {
             rowNeeded = row;
           }
         });
-        return rowNeeded.customerNote;
+        return rowNeeded?.customerNote;
       },
     },
     {
@@ -206,13 +206,13 @@ function getColumns(data) {
       accessorFn: (row) => undefined,
       AggregatedCell: ({ cell, table }) => {
         let rowNeeded = "";
-        data.rows.forEach((row) => {
+        data?.rows?.forEach((row) => {
           // eslint-disable-next-line eqeqeq
-          if (row.id === cell.row.original.orderId) {
+          if (row?.id === cell?.row?.original?.orderId) {
             rowNeeded = row;
           }
         });
-        return rowNeeded.staffNote;
+        return rowNeeded?.staffNote;
       },
     },
   ];

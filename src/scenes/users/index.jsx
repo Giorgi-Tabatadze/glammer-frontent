@@ -2,7 +2,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-restricted-globals */
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { Box, useTheme, IconButton, Tooltip, Button } from "@mui/material";
 import MaterialReactTable from "material-react-table";
 import { Delete, Edit } from "@mui/icons-material";
@@ -26,7 +26,6 @@ function Users() {
   });
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-
   const theme = useTheme();
   const { data, isLoading, isError, isRefetching } = useGetUsersQuery({
     pagination,
@@ -68,7 +67,10 @@ function Users() {
     [validationErrors],
   );
 
-  const columns = getColumns(getCommonEditTextFieldProps);
+  const columns = useMemo(
+    () => getColumns(getCommonEditTextFieldProps),
+    [getCommonEditTextFieldProps],
+  );
 
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {
     if (!Object.keys(validationErrors).length) {
