@@ -144,7 +144,6 @@ function Users() {
           showProgressBars: isRefetching,
           sorting,
         }}
-        editingMode="modal" // default
         enableColumnOrdering
         enableEditing
         onEditingRowSave={handleSaveRowEdits}

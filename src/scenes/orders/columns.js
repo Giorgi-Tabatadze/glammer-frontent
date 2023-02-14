@@ -2,7 +2,7 @@ import { Box, Typography, Button } from "@mui/material";
 import format from "date-fns/format";
 import parseISO from "date-fns/parseISO";
 
-function getColumns(data) {
+function getColumns(data, setDeliveryDetails) {
   const columns = [
     {
       accessorKey: "id",
@@ -41,10 +41,25 @@ function getColumns(data) {
             rowNeeded = row;
           }
         });
+        const delivery = rowNeeded?.user?.delivery;
+        const alternativeDelivery = rowNeeded?.delivery;
         return (
           <Box>
             <Typography>{rowNeeded?.user?.username}</Typography>
             <Typography>ID: {rowNeeded?.id}</Typography>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() =>
+                setDeliveryDetails({
+                  username: rowNeeded?.user?.username,
+                  delivery,
+                  alternativeDelivery,
+                })
+              }
+            >
+              Delivery Details
+            </Button>
           </Box>
         );
       },
@@ -102,6 +117,10 @@ function getColumns(data) {
       accessorKey: "product.price",
       header: "Price",
       size: 20,
+      Cell: ({ cell }) =>
+        cell?.row?.original?.differentPrice
+          ? cell?.row?.original?.differentPrice
+          : cell?.getValue(),
       AggregatedCell: ({ cell, table }) => {
         let totalPrice = 0;
         cell?.row?.leafRows?.forEach((row) => {

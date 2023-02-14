@@ -11,8 +11,8 @@ export const api = createApi({
     }),
     getUsers: build.query({
       query: ({ pagination, columnFilters, globalFilter, sorting }) => {
-        return `users/?limit=${pagination.pageSize}&page=${
-          pagination.pageIndex
+        return `users/?limit=${pagination?.pageSize}&page=${
+          pagination?.pageIndex
         }&globalfilter=${globalFilter}&columnfilters=${JSON.stringify(
           columnFilters,
         )}&sorting=${JSON.stringify(sorting)}`;
@@ -38,6 +38,16 @@ export const api = createApi({
         },
       }),
       invalidatesTags: ["Users"],
+    }),
+    addNewOrder: build.mutation({
+      query: (initialOrder) => ({
+        url: "orders",
+        method: "POST",
+        body: {
+          ...initialOrder,
+        },
+      }),
+      invalidatesTags: ["Orders"],
     }),
     updateUser: build.mutation({
       query: (initialUser) => ({
@@ -76,6 +86,7 @@ export const {
   useGetOrdersQuery,
   useAddNewUserMutation,
   useUpdateUserMutation,
+  useAddNewOrderMutation,
   useUpdateDeliveryMutation,
   useDeleteUserMutation,
 } = api;

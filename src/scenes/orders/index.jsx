@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
-import { Box, useTheme, IconButton, Tooltip, Button } from "@mui/material";
+import { Box, useTheme, IconButton, Tooltip } from "@mui/material";
 import MaterialReactTable from "material-react-table";
 import { Delete, Edit } from "@mui/icons-material";
-import { ExportToCsv } from "export-to-csv";
 import { useGetOrdersQuery } from "../../state/api";
 import Header from "../../components/Header";
 import { getColumns } from "./columns";
+import DeliveryDialog from "./DeliveryDialog";
 
 function Orders() {
   const [columnFilters, setColumnFilters] = useState([]);
@@ -17,13 +17,17 @@ function Orders() {
   });
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
+  const [deliveryDetails, setDeliveryDetails] = useState(false);
 
   const theme = useTheme();
 
   const { data, isLoading, isError, isRefetching, isSuccess } =
     useGetOrdersQuery({ pagination, columnFilters, sorting });
 
-  const columns = useMemo(() => getColumns(data), [data]);
+  const columns = useMemo(
+    () => getColumns(data, setDeliveryDetails),
+    [data, setDeliveryDetails],
+  );
 
   const handleSaveRowEdits = async ({ exitEditingMode, row, values }) => {};
 
@@ -45,6 +49,10 @@ function Orders() {
   return (
     <Box m="1.5rem 2.5rem">
       <Header title="Orders" subtitle="List of Orders" />
+      <DeliveryDialog
+        deliveryDetails={deliveryDetails}
+        setDeliveryDetails={setDeliveryDetails}
+      />
       <MaterialReactTable
         columns={columns}
         data={productInstancesArray}

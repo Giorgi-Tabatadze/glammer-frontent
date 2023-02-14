@@ -51,6 +51,7 @@ const navItems = [
   },
   {
     text: "New Order",
+    link: "orders/new",
     icon: <PointOfSaleOutlined />,
   },
   {
@@ -109,7 +110,7 @@ function Sidebar({
               </FlexBetween>
             </Box>
             <List>
-              {navItems.map(({ text, icon }) => {
+              {navItems.map(({ text, icon, link }) => {
                 if (!icon) {
                   return (
                     <Typography key={text} sx={{ m: "2.25rem 0 1rem 3rem" }}>
@@ -122,7 +123,7 @@ function Sidebar({
                   <ListItem key={text} disablePadding>
                     <ListItemButton
                       onClick={() => {
-                        navigate(`/${lcText}`);
+                        navigate(`/${link || lcText}`);
                         setActive(lcText);
                       }}
                       sx={{

@@ -9,6 +9,7 @@ import Layout from "./scenes/layout";
 import Products from "./scenes/products";
 import Users from "./scenes/users";
 import Orders from "./scenes/orders";
+import NewOrder from "./scenes/orders/NewOrder";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -25,6 +26,7 @@ function App() {
               <Route path="/products" element={<Products />} />
               <Route path="/users" element={<Users />} />
               <Route path="/orders" element={<Orders />} />
+              <Route path="/orders/new" element={<NewOrder />} />
             </Route>
           </Routes>
         </ThemeProvider>
