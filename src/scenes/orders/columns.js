@@ -2,7 +2,7 @@ import { Box, Typography, Button } from "@mui/material";
 import format from "date-fns/format";
 import parseISO from "date-fns/parseISO";
 
-function getColumns(data, setDeliveryDetails) {
+function getColumns(data, setDeliveryDetails, navigate) {
   const columns = [
     {
       accessorKey: "id",
@@ -59,6 +59,13 @@ function getColumns(data, setDeliveryDetails) {
               }
             >
               Delivery Details
+            </Button>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => navigate(`/orders/${rowNeeded?.id}`)}
+            >
+              Edit Order
             </Button>
           </Box>
         );

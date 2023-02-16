@@ -19,6 +19,12 @@ export const api = createApi({
       },
       providesTags: ["Users"],
     }),
+    getProductInstances: build.query({
+      query: ({ pagination, orderId }) => {
+        return `productinstances/?limit=${pagination?.pageSize}&page=${pagination?.pageIndex}&orderId=${orderId}`;
+      },
+      providesTags: ["ProductInstances"],
+    }),
     getOrders: build.query({
       query: ({ pagination, columnFilters, sorting }) => {
         return `orders/?limit=${pagination.pageSize}&page=${
@@ -38,6 +44,16 @@ export const api = createApi({
         },
       }),
       invalidatesTags: ["Users"],
+    }),
+    addNewProductInstance: build.mutation({
+      query: (initialProductInstance) => ({
+        url: "productinstances",
+        method: "POST",
+        body: {
+          ...initialProductInstance,
+        },
+      }),
+      invalidatesTags: ["ProductInstances"],
     }),
     addNewOrder: build.mutation({
       query: (initialOrder) => ({
@@ -59,6 +75,26 @@ export const api = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+    updateProductInstance: build.mutation({
+      query: (initialProductInstance) => ({
+        url: "productinstances",
+        method: "PATCH",
+        body: {
+          ...initialProductInstance,
+        },
+      }),
+      invalidatesTags: ["ProductInstances"],
+    }),
+    updateOrder: build.mutation({
+      query: (initialOrder) => ({
+        url: "orders",
+        method: "PATCH",
+        body: {
+          ...initialOrder,
+        },
+      }),
+      invalidatesTags: ["Orders"],
+    }),
     updateDelivery: build.mutation({
       query: (initialUser) => ({
         url: "deliveries",
@@ -77,16 +113,38 @@ export const api = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+    deleteOrder: build.mutation({
+      query: ({ id }) => ({
+        url: `orders`,
+        method: "DELETE",
+        body: { id },
+      }),
+      invalidatesTags: ["Orders"],
+    }),
+    deleteProductInstance: build.mutation({
+      query: ({ id }) => ({
+        url: `productinstances`,
+        method: "DELETE",
+        body: { id },
+      }),
+      invalidatesTags: ["ProductInstances"],
+    }),
   }),
 });
 
 export const {
   useGetProductsQuery,
   useGetUsersQuery,
+  useGetProductInstancesQuery,
   useGetOrdersQuery,
   useAddNewUserMutation,
+  useAddNewProductInstanceMutation,
   useUpdateUserMutation,
   useAddNewOrderMutation,
   useUpdateDeliveryMutation,
+  useUpdateProductInstanceMutation,
+  useUpdateOrderMutation,
   useDeleteUserMutation,
+  useDeleteOrderMutation,
+  useDeleteProductInstanceMutation,
 } = api;
