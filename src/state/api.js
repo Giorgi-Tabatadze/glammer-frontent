@@ -45,6 +45,14 @@ export const api = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+    addNewProduct: build.mutation({
+      query: (initialProduct) => ({
+        url: "products",
+        method: "POST",
+        body: initialProduct,
+      }),
+      invalidatesTags: ["Products"],
+    }),
     addNewProductInstance: build.mutation({
       query: (initialProductInstance) => ({
         url: "productinstances",
@@ -83,7 +91,7 @@ export const api = createApi({
           ...initialProductInstance,
         },
       }),
-      invalidatesTags: ["ProductInstances"],
+      invalidatesTags: ["ProductInstances", "Orders"],
     }),
     updateOrder: build.mutation({
       query: (initialOrder) => ({
@@ -138,6 +146,7 @@ export const {
   useGetProductInstancesQuery,
   useGetOrdersQuery,
   useAddNewUserMutation,
+  useAddNewProductMutation,
   useAddNewProductInstanceMutation,
   useUpdateUserMutation,
   useAddNewOrderMutation,

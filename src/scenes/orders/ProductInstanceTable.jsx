@@ -28,7 +28,7 @@ function ProductInstanceTable({
               maxWidth: { xs: 30, md: 40 },
             }}
             alt="Product Image."
-            src={`${process.env.REACT_APP_BASE_URL}/${cell?.getValue()}`}
+            src={`${process.env.REACT_APP_IMAGES_URL}/small/${cell?.row?.original?.productId}.jpg`}
           />
         ),
       },

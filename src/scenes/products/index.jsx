@@ -1,23 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
 import {
   Box,
   Card,
   CardMedia,
-  CardActions,
   CardContent,
   Collapse,
   Button,
   Typography,
-  Rating,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useGetProductsQuery } from "../../state/api";
 import Header from "../../components/Header";
-import FlexBetween from "../../components/FlexBetween";
 
-function Product({ id, productCode, price, thumbnail, instagramUrl }) {
+function Product({ id, price, imageLink }) {
   const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -33,8 +30,8 @@ function Product({ id, productCode, price, thumbnail, instagramUrl }) {
     >
       <CardMedia
         sx={{ width: "100%", aspectRatio: "1/1" }}
-        image={`http://localhost:3500/${thumbnail}`}
-        title={productCode}
+        image={`${imageLink}/${id}.jpg`}
+        title={id}
         onClick={() => setIsExpanded(!isExpanded)}
       />
       <Collapse in={isExpanded} timeout="auto" unmountOnExit>
@@ -50,7 +47,7 @@ function Product({ id, productCode, price, thumbnail, instagramUrl }) {
             color={theme.palette.secondary[200]}
             gutterBottom
           >
-            {productCode}
+            {id}
           </Typography>
           <Typography
             sx={{ fontSize: "10px" }}
@@ -80,6 +77,21 @@ function Products() {
   const navigate = useNavigate();
   const theme = useTheme();
 
+  const isSmallScreen = useMediaQuery("(max-width: 599px)");
+  const isMediumScreen = useMediaQuery(
+    "(min-width: 600px) and (max-width: 959px)",
+  );
+  const isLargeScreen = useMediaQuery("(min-width: 960px)");
+
+  let imageLink;
+  if (isSmallScreen) {
+    imageLink = `${process.env.REACT_APP_IMAGES_URL}/small`;
+  } else if (isMediumScreen) {
+    imageLink = `${process.env.REACT_APP_IMAGES_URL}/medium`;
+  } else {
+    imageLink = `${process.env.REACT_APP_IMAGES_URL}/large`;
+  }
+
   return (
     <Box m="1.5rem 2.5rem">
       <Header title="PRODUCTS" subtitle="See Your List of Products" />
@@ -106,12 +118,12 @@ function Products() {
         >
           {data.map((product) => (
             <Product
-              key={product.code}
+              key={product.id}
               id={product.id}
               productCode={product.productCode}
               price={product.price}
-              thumbnail={product.thumbnail}
               instagramUrl={product.instagramUrl}
+              imageLink={imageLink}
             />
           ))}
         </Box>

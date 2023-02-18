@@ -22,10 +22,9 @@ import { useGetProductsQuery } from "../../state/api";
 import Header from "../../components/Header";
 import FlexBetween from "../../components/FlexBetween";
 
-function Product({ product, cart, setCart, setSnackbar }) {
-  const { id, productCode, price, thumbnail, instagramUrl } = product;
+function Product({ product, cart, setCart, setSnackbar, imageLink }) {
+  const { id, productCode } = product;
   const theme = useTheme();
-  const [isExpanded, setIsExpanded] = useState(false);
 
   const navigate = useNavigate();
 
@@ -52,9 +51,8 @@ function Product({ product, cart, setCart, setSnackbar }) {
     >
       <CardMedia
         sx={{ width: "100%", aspectRatio: "1/1" }}
-        image={`http://localhost:3500/${thumbnail}`}
+        image={`${imageLink}/${id}.jpg`}
         title={productCode}
-        onClick={() => setIsExpanded(!isExpanded)}
       />
     </Card>
   );
@@ -68,6 +66,21 @@ function NewOrderProducts({ setSelectedProductInstances }) {
   const isNonMobile = useMediaQuery("(min-width:100px)");
   const navigate = useNavigate();
   const theme = useTheme();
+
+  const isSmallScreen = useMediaQuery("(max-width: 599px)");
+  const isMediumScreen = useMediaQuery(
+    "(min-width: 600px) and (max-width: 959px)",
+  );
+  const isLargeScreen = useMediaQuery("(min-width: 960px)");
+
+  let imageLink;
+  if (isSmallScreen) {
+    imageLink = `${process.env.REACT_APP_IMAGES_URL}/small`;
+  } else if (isMediumScreen) {
+    imageLink = `${process.env.REACT_APP_IMAGES_URL}/medium`;
+  } else {
+    imageLink = `${process.env.REACT_APP_IMAGES_URL}/large`;
+  }
 
   const handleSnackBarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -128,6 +141,7 @@ function NewOrderProducts({ setSelectedProductInstances }) {
               cart={cart}
               setCart={setCart}
               setSnackbar={setSnackbar}
+              imageLink={imageLink}
             />
           ))}
         </Box>

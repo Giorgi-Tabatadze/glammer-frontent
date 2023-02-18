@@ -58,7 +58,6 @@ function EditOrder() {
   const [deleteOrder, deleteStatus] = useDeleteOrderMutation();
 
   useEffect(() => {
-    console.log(selectedUser);
     if (selectedUser?.id !== order?.user?.id) {
       setAlternativeDelivery(false);
     } else {
@@ -67,7 +66,6 @@ function EditOrder() {
   }, [selectedUser, order]);
 
   useEffect(() => {
-    console.log(order);
     if (order) {
       setSelectedUser(order?.user);
       setStaffNote(order?.staffNote);
@@ -84,6 +82,8 @@ function EditOrder() {
       setRequiredAlert(true);
     } else {
       setBackDropOn(true);
+      console.log(selectedUser);
+
       updateOrder({
         id: order?.id,
         userId: selectedUser.id,
@@ -282,20 +282,20 @@ function EditOrder() {
           </FormControl>
           <Divider sx={{ mt: "1rem" }} />
           <Button
-            sx={{ mt: "1rem", mb: "2rem" }}
+            sx={{ mt: "0.5rem", mb: "0.5rem", width: "10rem" }}
+            color="error"
+            onClick={handleDeleteOrder}
+            variant="contained"
+          >
+            Delete Order
+          </Button>
+          <Button
+            sx={{ mb: "1rem" }}
             color="secondary"
             onClick={handleOrderEdit}
             variant="contained"
           >
             Edit Order
-          </Button>
-          <Button
-            sx={{ mt: "1rem", mb: "2rem" }}
-            color="secondary"
-            onClick={handleDeleteOrder}
-            variant="contained"
-          >
-            Delete Order
           </Button>
         </Stack>
       </Box>
