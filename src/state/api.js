@@ -6,7 +6,10 @@ export const api = createApi({
   tagTypes: ["Products", "Users"],
   endpoints: (build) => ({
     getProducts: build.query({
-      query: () => "products",
+      query: ({ id, pagination }) =>
+        `products?limit=${pagination?.pageSize}&page=${pagination?.pageIndex}${
+          id ? `&id=${id}` : ""
+        }`,
       providesTags: ["Products"],
     }),
     getUsers: build.query({
@@ -83,6 +86,14 @@ export const api = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+    updateProduct: build.mutation({
+      query: (initialProduct) => ({
+        url: "products",
+        method: "PATCH",
+        body: initialProduct,
+      }),
+      invalidatesTags: ["Products"],
+    }),
     updateProductInstance: build.mutation({
       query: (initialProductInstance) => ({
         url: "productinstances",
@@ -148,8 +159,9 @@ export const {
   useAddNewUserMutation,
   useAddNewProductMutation,
   useAddNewProductInstanceMutation,
-  useUpdateUserMutation,
   useAddNewOrderMutation,
+  useUpdateUserMutation,
+  useUpdateProductMutation,
   useUpdateDeliveryMutation,
   useUpdateProductInstanceMutation,
   useUpdateOrderMutation,

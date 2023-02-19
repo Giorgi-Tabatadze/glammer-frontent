@@ -12,6 +12,7 @@ import Orders from "./scenes/orders";
 import NewOrder from "./scenes/orders/NewOrder";
 import EditOrder from "./scenes/orders/EditOrder";
 import NewProduct from "./scenes/products/NewProduct";
+import EditProduct from "./scenes/products/EditProduct";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -27,6 +28,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/new" element={<NewProduct />} />
+              <Route path="/products/:id" element={<EditProduct />} />
               <Route path="/users" element={<Users />} />
               <Route path="/orders" element={<Orders />} />
               <Route path="/orders/new" element={<NewOrder />} />
