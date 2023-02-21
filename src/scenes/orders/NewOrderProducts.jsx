@@ -134,9 +134,9 @@ function NewOrderProducts({ setSelectedProductInstances }) {
             "& > div": { gridColumn: isNonMobile ? undefined : "span 3" },
           }}
         >
-          {data.map((product) => (
+          {data?.map((product) => (
             <Product
-              key={product.id}
+              key={product?.id}
               product={product}
               cart={cart}
               setCart={setCart}

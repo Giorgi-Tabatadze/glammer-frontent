@@ -122,13 +122,13 @@ function Products() {
             "& > div": { gridColumn: isNonMobile ? undefined : "span 3" },
           }}
         >
-          {data.map((product) => (
+          {data?.map((product) => (
             <Product
-              key={product.id}
-              id={product.id}
-              productCode={product.productCode}
-              price={product.price}
-              instagramUrl={product.instagramUrl}
+              key={product?.id}
+              id={product?.id}
+              productCode={product?.productCode}
+              price={product?.price}
+              instagramUrl={product?.instagramUrl}
               imageLink={imageLink}
             />
           ))}
