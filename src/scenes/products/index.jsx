@@ -13,8 +13,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useGetProductsQuery } from "../../state/api";
 import Header from "../../components/Header";
+import useAuth from "../../hooks/useAuth";
 
-function Product({ id, price, imageLink }) {
+function Product({ id, price, imageLink, isAdmin }) {
   const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -56,15 +57,16 @@ function Product({ id, price, imageLink }) {
           >
             {price}GEL
           </Typography>
-
-          <Button
-            variant="primary"
-            size="small"
-            onClick={() => navigate(`${id}`)}
-            sx={{ backgroundColor: theme.palette.secondary[300] }}
-          >
-            Edit
-          </Button>
+          {isAdmin && (
+            <Button
+              variant="primary"
+              size="small"
+              onClick={() => navigate(`${id}`)}
+              sx={{ backgroundColor: theme.palette.secondary[300] }}
+            >
+              Edit
+            </Button>
+          )}
         </CardContent>
       </Collapse>
     </Card>
@@ -82,6 +84,7 @@ function Products() {
   const isNonMobile = useMediaQuery("(min-width:100px)");
   const navigate = useNavigate();
   const theme = useTheme();
+  const { isEmployee, isAdmin } = useAuth();
 
   const isSmallScreen = useMediaQuery("(max-width: 599px)");
   const isMediumScreen = useMediaQuery(
@@ -101,14 +104,17 @@ function Products() {
   return (
     <Box m="1.5rem 2.5rem">
       <Header title="PRODUCTS" subtitle="See Your List of Products" />
-      <Button
-        variant="primary"
-        size="small"
-        onClick={() => navigate("new")}
-        sx={{ backgroundColor: theme.palette.secondary[300], mt: "0.5rem" }}
-      >
-        + Add New Product
-      </Button>
+      {isAdmin && (
+        <Button
+          variant="primary"
+          size="small"
+          onClick={() => navigate("new")}
+          sx={{ backgroundColor: theme.palette.secondary[300], mt: "0.5rem" }}
+        >
+          + Add New Product
+        </Button>
+      )}
+
       {data || !isLoading ? (
         <Box
           mt="20px"
@@ -122,14 +128,15 @@ function Products() {
             "& > div": { gridColumn: isNonMobile ? undefined : "span 3" },
           }}
         >
-          {data.map((product) => (
+          {data?.map((product) => (
             <Product
-              key={product.id}
-              id={product.id}
-              productCode={product.productCode}
-              price={product.price}
-              instagramUrl={product.instagramUrl}
+              key={product?.id}
+              id={product?.id}
+              productCode={product?.productCode}
+              price={product?.price}
+              instagramUrl={product?.instagramUrl}
               imageLink={imageLink}
+              isAdmin={isAdmin}
             />
           ))}
         </Box>

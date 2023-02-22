@@ -15,6 +15,7 @@ import {
 } from "../../state/api";
 import CreateNewAccountModal from "./CreateNewAccountModal";
 import { getColumns } from "./columns";
+import useAuth from "../../hooks/useAuth";
 
 function Users() {
   const [columnFilters, setColumnFilters] = useState([]);
@@ -27,6 +28,9 @@ function Users() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const theme = useTheme();
+
+  const { isEmployee, isAdmin } = useAuth();
+
   const { data, isLoading, isError, isRefetching } = useGetUsersQuery({
     pagination,
     columnFilters,
@@ -145,7 +149,7 @@ function Users() {
           sorting,
         }}
         enableColumnOrdering
-        enableEditing
+        enableEditing={isAdmin}
         onEditingRowSave={handleSaveRowEdits}
         renderRowActions={({ row, table }) => (
           <Box sx={{ display: "flex", gap: "1rem" }}>
@@ -161,22 +165,28 @@ function Users() {
             </Tooltip>
           </Box>
         )}
-        renderTopToolbarCustomActions={() => (
-          <Button
-            color="secondary"
-            onClick={() => setCreateModalOpen(true)}
-            variant="contained"
-          >
-            Create New Account
-          </Button>
-        )}
+        renderTopToolbarCustomActions={
+          isAdmin
+            ? () => (
+                <Button
+                  color="secondary"
+                  onClick={() => setCreateModalOpen(true)}
+                  variant="contained"
+                >
+                  Create New Account
+                </Button>
+              )
+            : null
+        }
       />
-      <CreateNewAccountModal
-        columns={columns}
-        open={createModalOpen}
-        onClose={() => setCreateModalOpen(false)}
-        onSubmit={() => setCreateModalOpen(false)}
-      />
+      {isAdmin && (
+        <CreateNewAccountModal
+          columns={columns}
+          open={createModalOpen}
+          onClose={() => setCreateModalOpen(false)}
+          onSubmit={() => setCreateModalOpen(false)}
+        />
+      )}
     </Box>
   );
 }

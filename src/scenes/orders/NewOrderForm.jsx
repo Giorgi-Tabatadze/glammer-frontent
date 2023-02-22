@@ -43,7 +43,7 @@ function NewOrderForm({
     } else {
       setBackDropOn(true);
       addNewOrder({
-        userId: selectedUser.id,
+        userId: selectedUser?.id,
         productInstances: selectedProductInstances,
         alternativeDelivery,
         fundsDeposited,

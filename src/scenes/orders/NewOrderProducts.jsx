@@ -62,7 +62,13 @@ function NewOrderProducts({ setSelectedProductInstances }) {
   const [cart, setCart] = useState([]);
   const [snackbar, setSnackbar] = useState(false);
 
-  const { data, isLoading } = useGetProductsQuery();
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+  const { data, isLoading } = useGetProductsQuery({
+    pagination,
+  });
   const isNonMobile = useMediaQuery("(min-width:100px)");
   const navigate = useNavigate();
   const theme = useTheme();
@@ -134,9 +140,9 @@ function NewOrderProducts({ setSelectedProductInstances }) {
             "& > div": { gridColumn: isNonMobile ? undefined : "span 3" },
           }}
         >
-          {data.map((product) => (
+          {data?.map((product) => (
             <Product
-              key={product.id}
+              key={product?.id}
               product={product}
               cart={cart}
               setCart={setCart}

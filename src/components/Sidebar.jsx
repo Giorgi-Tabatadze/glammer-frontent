@@ -19,10 +19,13 @@ import {
   ShoppingCartOutlined,
   Groups2Outlined,
   PointOfSaleOutlined,
-  LocalShippingOutlined,
   DvrOutlined,
+  ShareLocationOutlined,
+  LogoutOutlined,
 } from "@mui/icons-material";
 import FlexBetween from "./FlexBetween";
+import useAuth from "../hooks/useAuth";
+import { useSendLogoutMutation } from "../scenes/auth/authApi";
 
 const navItems = [
   {
@@ -46,6 +49,11 @@ const navItems = [
     icon: <DvrOutlined />,
   },
   {
+    text: "Scaccounts",
+    icon: <ShareLocationOutlined />,
+    adminOnly: true,
+  },
+  {
     text: "Quick Access",
     icon: null,
   },
@@ -55,8 +63,12 @@ const navItems = [
     icon: <PointOfSaleOutlined />,
   },
   {
-    text: "Delivery",
-    icon: <LocalShippingOutlined />,
+    text: "Account",
+    icon: null,
+  },
+  {
+    text: "Logout",
+    icon: <LogoutOutlined />,
   },
 ];
 
@@ -71,9 +83,14 @@ function Sidebar({
   const navigate = useNavigate();
   const theme = useTheme();
 
+  const [sendLogout, { isLoading, isSuccess, isError, error }] =
+    useSendLogoutMutation();
+
   useEffect(() => {
     setActive(pathname.substring(1));
   }, [pathname]);
+
+  const { isEmployee, isAdmin } = useAuth();
 
   return (
     <Box component="nav">
@@ -110,7 +127,8 @@ function Sidebar({
               </FlexBetween>
             </Box>
             <List>
-              {navItems.map(({ text, icon, link }) => {
+              {navItems.map(({ text, icon, link, adminOnly }) => {
+                if (adminOnly && !isAdmin) return null;
                 if (!icon) {
                   return (
                     <Typography key={text} sx={{ m: "2.25rem 0 1rem 3rem" }}>
@@ -119,11 +137,50 @@ function Sidebar({
                   );
                 }
                 const lcText = text.toLowerCase().replace(/ +/g, "");
+                let content;
+                if (text === "Logout") {
+                  return (
+                    <ListItem key={text} disablePadding>
+                      <ListItemButton
+                        onClick={() => {
+                          sendLogout();
+                          navigate(`/login`);
+                        }}
+                        sx={{
+                          backgroundColor:
+                            active === lcText
+                              ? theme.palette.secondary[300]
+                              : "transparent",
+                          color:
+                            active === lcText
+                              ? theme.palette.primary[600]
+                              : theme.palette.secondary[100],
+                        }}
+                      >
+                        <ListItemIcon
+                          sx={{
+                            ml: "2rem",
+                            color:
+                              active === lcText
+                                ? theme.palette.primary[600]
+                                : theme.palette.secondary[200],
+                          }}
+                        >
+                          {icon}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                        {active === lcText && (
+                          <ChevronRightOutlined sx={{ ml: "auto" }} />
+                        )}
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                }
                 return (
                   <ListItem key={text} disablePadding>
                     <ListItemButton
                       onClick={() => {
-                        navigate(`/${link || lcText}`);
+                        navigate(`/managment/${link || lcText}`);
                         setActive(lcText);
                       }}
                       sx={{
