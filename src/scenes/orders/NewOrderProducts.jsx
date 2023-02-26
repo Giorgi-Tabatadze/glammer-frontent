@@ -3,30 +3,19 @@ import {
   Box,
   Card,
   CardMedia,
-  CardActions,
-  CardContent,
-  Collapse,
   Button,
-  Typography,
-  Rating,
   useTheme,
   useMediaQuery,
   IconButton,
   Badge,
   Snackbar,
-  Alert,
 } from "@mui/material";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
-import { useNavigate } from "react-router-dom";
 import { useGetProductsQuery } from "../../state/api";
-import Header from "../../components/Header";
-import FlexBetween from "../../components/FlexBetween";
 
 function Product({ product, cart, setCart, setSnackbar, imageLink }) {
   const { id, productCode } = product;
   const theme = useTheme();
-
-  const navigate = useNavigate();
 
   return (
     <Card
@@ -70,7 +59,6 @@ function NewOrderProducts({ setSelectedProductInstances }) {
     pagination,
   });
   const isNonMobile = useMediaQuery("(min-width:100px)");
-  const navigate = useNavigate();
   const theme = useTheme();
 
   const isSmallScreen = useMediaQuery("(max-width: 599px)");

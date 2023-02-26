@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
-import { Box, useTheme, IconButton, Tooltip } from "@mui/material";
+import { Box, useTheme, Snackbar, Alert } from "@mui/material";
 import MaterialReactTable from "material-react-table";
 import { Delete, Edit } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,7 @@ function Orders() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const [deliveryDetails, setDeliveryDetails] = useState(false);
+  const [copiedToClipBoard, setCopiedToClipBoard] = useState(false);
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function Orders() {
   const [updateProductInstance] = useUpdateProductInstanceMutation();
 
   const columns = useMemo(
-    () => getColumns(data, setDeliveryDetails, navigate),
+    () => getColumns(data, setDeliveryDetails, navigate, setCopiedToClipBoard),
     [data, setDeliveryDetails, navigate],
   );
 
@@ -72,6 +73,30 @@ function Orders() {
   return (
     <Box m="1.5rem 2.5rem">
       <Header title="Orders" subtitle="List of Orders" />
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={copiedToClipBoard}
+        autoHideDuration={6000}
+        onClose={(event, reason) => {
+          if (reason === "clickaway") {
+            return;
+          }
+          setCopiedToClipBoard(false);
+        }}
+      >
+        <Alert
+          onClose={(event, reason) => {
+            if (reason === "clickaway") {
+              return;
+            }
+            setCopiedToClipBoard(false);
+          }}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          User Link Copied
+        </Alert>
+      </Snackbar>
       <DeliveryDialog
         deliveryDetails={deliveryDetails}
         setDeliveryDetails={setDeliveryDetails}

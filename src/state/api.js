@@ -89,6 +89,18 @@ export const api = createApi({
       },
       providesTags: ["Scaccounts"],
     }),
+    getClientViewUser: build.query({
+      query: ({ publicId }) => {
+        return `clientviews/users/?publicId=${publicId}`;
+      },
+      providesTags: ["ClientViewUser"],
+    }),
+    getClientViewOrders: build.query({
+      query: ({ publicId, pagination }) => {
+        return `clientviews/orders/?publicId=${publicId}&limit=${pagination?.pageSize}&page=${pagination?.pageIndex}`;
+      },
+      providesTags: ["ClientViewOrders"],
+    }),
     addNewUser: build.mutation({
       query: (initialUser) => ({
         url: "users",
@@ -176,14 +188,34 @@ export const api = createApi({
       invalidatesTags: ["Orders"],
     }),
     updateDelivery: build.mutation({
-      query: (initialUser) => ({
+      query: (initialDelivery) => ({
         url: "deliveries",
         method: "PATCH",
         body: {
-          ...initialUser,
+          ...initialDelivery,
         },
       }),
       invalidatesTags: ["Users"],
+    }),
+    updateClientViewDelivery: build.mutation({
+      query: (initialDelivery) => ({
+        url: "clientviews/delivery",
+        method: "PATCH",
+        body: {
+          ...initialDelivery,
+        },
+      }),
+      invalidatesTags: ["ClientViewUser"],
+    }),
+    updateClientViewAlternativeDelivery: build.mutation({
+      query: (initialAlternativeDelivery) => ({
+        url: "clientviews/alternativedeliverys",
+        method: "PATCH",
+        body: {
+          ...initialAlternativeDelivery,
+        },
+      }),
+      invalidatesTags: ["ClientViewOrders"],
     }),
     updateScaccount: build.mutation({
       query: (initialScaccount) => ({
@@ -236,6 +268,8 @@ export const {
   useGetProductInstancesQuery,
   useGetOrdersQuery,
   useGetScaccountsQuery,
+  useGetClientViewUserQuery,
+  useGetClientViewOrdersQuery,
   useAddNewUserMutation,
   useAddNewProductMutation,
   useAddNewProductInstanceMutation,
@@ -244,6 +278,8 @@ export const {
   useUpdateUserMutation,
   useUpdateProductMutation,
   useUpdateDeliveryMutation,
+  useUpdateClientViewDeliveryMutation,
+  useUpdateClientViewAlternativeDeliveryMutation,
   useUpdateProductInstanceMutation,
   useUpdateOrderMutation,
   useUpdateScaccountMutation,

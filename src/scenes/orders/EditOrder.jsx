@@ -109,7 +109,7 @@ function EditOrder() {
 
   useEffect(() => {
     if (isSuccess || deleteStatus.isSuccess) {
-      navigate("/orders");
+      navigate("/managment/orders");
     } else if (isError || deleteStatus.isError) {
       setSavingError(true);
     }
@@ -265,15 +265,7 @@ function EditOrder() {
               onChange={(e) => setStatus(e.target.value)}
               value={status}
             >
-              {[
-                "created",
-                "ordered",
-                "tracked",
-                "sent",
-                "delivered",
-                "other",
-                "canceled",
-              ].map((state) => (
+              {["created", "delivered", "other", "canceled"].map((state) => (
                 <MenuItem key={`orderstatus${state}`} value={state}>
                   {state}
                 </MenuItem>

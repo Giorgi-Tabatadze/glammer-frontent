@@ -68,7 +68,7 @@ function Login() {
   const content = (
     <Box m="3rem 2.5rem">
       <Box>
-        <Typography variant="h1">WELCOME PRETTY GIRL</Typography>
+        <Typography variant="h1"> Login</Typography>
       </Box>
       <Box>
         <Typography ref={errRef} variant="subtitle1" role="alert">

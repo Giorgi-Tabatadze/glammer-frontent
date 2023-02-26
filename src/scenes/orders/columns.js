@@ -2,6 +2,15 @@ import { Box, Typography, Button, MenuItem } from "@mui/material";
 import format from "date-fns/format";
 import parseISO from "date-fns/parseISO";
 
+function copy(text) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+}
+
 function getColumns(data, setDeliveryDetails, navigate) {
   const columns = [
     {
@@ -73,9 +82,21 @@ function getColumns(data, setDeliveryDetails, navigate) {
               sx={{ mt: "0.5rem" }}
               color="secondary"
               variant="contained"
-              onClick={() => navigate(`/orders/${rowNeeded?.id}`)}
+              onClick={() => navigate(`/managment/orders/${rowNeeded?.id}`)}
             >
               Edit Order
+            </Button>
+            <Button
+              sx={{ mt: "0.5rem" }}
+              color="secondary"
+              variant="contained"
+              onClick={() =>
+                copy(
+                  `${process.env.REACT_APP_DOMAIN}/#/clientview/${rowNeeded?.user.publicId}/ka`,
+                )
+              }
+            >
+              Copy User Link
             </Button>
           </Box>
         );

@@ -19,6 +19,7 @@ import Login from "./scenes/auth/Login";
 import PersistLogin from "./scenes/auth/PersistLogin";
 import RequireAuth from "./scenes/auth/RequireAuth";
 import { ROLES } from "./config/roles";
+import ClientView from "./scenes/clientview";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -35,7 +36,10 @@ function App() {
               {/** Public Routes */}
               <Route index element={<Login />} />
               <Route path="login" element={<Login />} />
-
+              <Route
+                path="clientview/:publicId/:language"
+                element={<ClientView />}
+              />
               {/** Protected Routes */}
               <Route element={<PersistLogin />}>
                 <Route
@@ -45,6 +49,7 @@ function App() {
                 >
                   <Route path="managment" element={<Layout />}>
                     <Route index element={<Dashboard />} />
+                    <Route path="dashboard" element={<Dashboard />} />
                     <Route path="products">
                       <Route index element={<Products />} />
                       <Route

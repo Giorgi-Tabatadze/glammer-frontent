@@ -63,7 +63,7 @@ function NewOrderForm({
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("/orders");
+      navigate("/managment/orders");
     } else if (isError) {
       setSavingError(true);
     }

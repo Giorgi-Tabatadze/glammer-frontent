@@ -97,7 +97,7 @@ function EditProduct({ onSubmit, disabled }) {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("/products");
+      navigate("/managment/products");
     } else if (isError) {
       setSavingError(true);
     }
