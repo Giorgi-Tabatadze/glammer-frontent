@@ -34,6 +34,8 @@ function Scaccounts() {
   const [updateScaccount] = useUpdateScaccountMutation();
   const [deleteScaccount] = useDeleteScaccountMutation();
 
+  console.log(data);
+
   const getCommonEditTextFieldProps = useCallback(
     (cell) => {
       return {

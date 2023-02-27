@@ -24,19 +24,19 @@ function DeliveryDialog({ deliveryDetails, setDeliveryDetails }) {
           User Delivery:
         </Typography>
         <Typography variant="subtitle3" component="div">
-          Firstname: {deliveryDetails.delivery.firstname}
+          Firstname: {deliveryDetails?.delivery?.firstname}
         </Typography>
         <Typography variant="subtitle3" component="div">
-          Lastname : {deliveryDetails.delivery.lastname}
+          Lastname : {deliveryDetails?.delivery?.lastname}
         </Typography>
         <Typography variant="subtitle3" component="div">
-          Telephone : {deliveryDetails.delivery.telephone}
+          Telephone : {deliveryDetails?.delivery?.telephone}
         </Typography>
         <Typography variant="subtitle3" component="div">
-          City: {deliveryDetails.delivery.city}
+          City: {deliveryDetails?.delivery?.city}
         </Typography>
         <Typography variant="subtitle3" component="div">
-          Address: {deliveryDetails.delivery.address}
+          Address: {deliveryDetails?.delivery?.address}
         </Typography>
         {deliveryDetails?.alternativeDelivery && (
           <>
@@ -45,19 +45,19 @@ function DeliveryDialog({ deliveryDetails, setDeliveryDetails }) {
               Alternative Delivery:
             </Typography>
             <Typography variant="subtitle3" component="div">
-              Firstname: {deliveryDetails?.alternativeDelivery.firstname}
+              Firstname: {deliveryDetails?.alternativeDelivery?.firstname}
             </Typography>
             <Typography variant="subtitle3" component="div">
-              Lastname : {deliveryDetails?.alternativeDelivery.lastname}
+              Lastname : {deliveryDetails?.alternativeDelivery?.lastname}
             </Typography>
             <Typography variant="subtitle3" component="div">
-              Telephone : {deliveryDetails?.alternativeDelivery.telephone}
+              Telephone : {deliveryDetails?.alternativeDelivery?.telephone}
             </Typography>
             <Typography variant="subtitle3" component="div">
-              City: {deliveryDetails?.alternativeDelivery.city}
+              City: {deliveryDetails?.alternativeDelivery?.city}
             </Typography>
             <Typography variant="subtitle3" component="div">
-              Address: {deliveryDetails?.alternativeDelivery.address}
+              Address: {deliveryDetails?.alternativeDelivery?.address}
             </Typography>
           </>
         )}

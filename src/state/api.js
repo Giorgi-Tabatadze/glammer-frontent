@@ -259,6 +259,14 @@ export const api = createApi({
       }),
       invalidatesTags: ["Scaccounts"],
     }),
+    deleteProduct: build.mutation({
+      query: ({ id }) => ({
+        url: `products`,
+        method: "DELETE",
+        body: { id },
+      }),
+      invalidatesTags: ["Products"],
+    }),
   }),
 });
 
@@ -287,4 +295,5 @@ export const {
   useDeleteOrderMutation,
   useDeleteProductInstanceMutation,
   useDeleteScaccountMutation,
+  useDeleteProductMutation,
 } = api;

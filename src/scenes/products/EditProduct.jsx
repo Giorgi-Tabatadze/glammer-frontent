@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -16,7 +17,11 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { useUpdateProductMutation, useGetProductsQuery } from "../../state/api";
+import {
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+  useGetProductsQuery,
+} from "../../state/api";
 import Header from "../../components/Header";
 
 function EditProduct({ onSubmit, disabled }) {
@@ -76,6 +81,7 @@ function EditProduct({ onSubmit, disabled }) {
 
   const [UpdateProduct, { isSuccess, isError, error }] =
     useUpdateProductMutation();
+  const [DeleteProduct] = useDeleteProductMutation();
 
   const handleFileChange = (event) => {
     setFile(event?.target?.files);
@@ -93,6 +99,19 @@ function EditProduct({ onSubmit, disabled }) {
     formData.append("data", JSON.stringify(data));
     setBackDropOn(true);
     UpdateProduct(formData);
+  };
+  // eslint-disable-next-line consistent-return
+  const handleDeleteProduct = async () => {
+    if (
+      !confirm(
+        `Are you sure you want to delete product with Id: ${product[0].id}?`,
+      )
+    ) {
+      return "";
+    }
+    // send api delete request here, then refetch or update local table data for re-render
+    DeleteProduct({ id: product[0].id });
+    navigate("/managment/products");
   };
 
   useEffect(() => {
@@ -218,6 +237,13 @@ function EditProduct({ onSubmit, disabled }) {
             disabled={disabled}
           >
             Submit
+          </Button>
+          <Button
+            onClick={handleDeleteProduct}
+            variant="contained"
+            color="error"
+          >
+            Delete Product
           </Button>
         </Stack>
       </form>
