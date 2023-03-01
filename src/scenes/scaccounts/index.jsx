@@ -15,6 +15,7 @@ import {
 import CreateNewAccountModal from "./CreateNewAccountModal";
 import { getColumns } from "./columns";
 import useAuth from "../../hooks/useAuth";
+import StartScraping from "./StartScraping";
 
 function Scaccounts() {
   const [pagination, setPagination] = useState({
@@ -145,13 +146,16 @@ function Scaccounts() {
           </Box>
         )}
         renderTopToolbarCustomActions={() => (
-          <Button
-            color="secondary"
-            onClick={() => setCreateModalOpen(true)}
-            variant="contained"
-          >
-            Create New Account
-          </Button>
+          <>
+            <Button
+              color="secondary"
+              onClick={() => setCreateModalOpen(true)}
+              variant="contained"
+            >
+              Create New Account
+            </Button>
+            <StartScraping />
+          </>
         )}
       />
       <CreateNewAccountModal

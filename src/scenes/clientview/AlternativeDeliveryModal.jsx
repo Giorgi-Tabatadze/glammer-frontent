@@ -21,6 +21,7 @@ export default function AlternativeDeliveryModal({
   open,
   handleCancel,
   translations,
+  setBackdrop,
 }) {
   const [values, setValues] = useState({ ...alternativeDelivery });
 
@@ -28,11 +29,13 @@ export default function AlternativeDeliveryModal({
     useUpdateClientViewAlternativeDeliveryMutation();
 
   const handleUpdateAlternativeDelivery = async (deleteAlternativeAddress) => {
+    setBackdrop(true);
     await updateAlternativeDelivery({
       id,
       publicId,
       alternativeDelivery: values,
     });
+    setBackdrop(false);
     handleCancel();
   };
   useEffect(() => {

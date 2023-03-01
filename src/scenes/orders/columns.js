@@ -209,7 +209,7 @@ function getColumns(data, setDeliveryDetails, navigate) {
     },
     {
       accessorKey: "tracking.sentDate",
-      accessorFn: (row) => row?.tracking?.setDate,
+      accessorFn: (row) => row?.tracking?.sentDate,
       header: "Sent Date",
       size: 20,
       enableSorting: false,

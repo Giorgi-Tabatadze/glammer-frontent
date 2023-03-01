@@ -267,6 +267,13 @@ export const api = createApi({
       }),
       invalidatesTags: ["Products"],
     }),
+    StartScrapingStatus: build.mutation({
+      query: () => ({
+        url: "trackings/startscrape",
+        method: "PATCH",
+        body: {},
+      }),
+    }),
   }),
 });
 
@@ -291,6 +298,7 @@ export const {
   useUpdateProductInstanceMutation,
   useUpdateOrderMutation,
   useUpdateScaccountMutation,
+  useStartScrapingStatusMutation,
   useDeleteUserMutation,
   useDeleteOrderMutation,
   useDeleteProductInstanceMutation,

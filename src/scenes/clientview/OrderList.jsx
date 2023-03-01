@@ -54,7 +54,7 @@ const getPricing = (order) => {
   return { totalPrice, leftToPay, fundsDeposited };
 };
 
-function OrderList({ publicId, translations }) {
+function OrderList({ publicId, translations, setBackdrop }) {
   const [orders, setOrders] = useState([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -100,6 +100,7 @@ function OrderList({ publicId, translations }) {
         open={modalProps.open}
         handleCancel={modalProps.handleCancel}
         translations={translations}
+        setBackdrop={setBackdrop}
       />
       {data ? (
         <InfiniteScroll
@@ -164,11 +165,13 @@ function OrderList({ publicId, translations }) {
                     color="error"
                     variant="contained"
                     onClick={async () => {
+                      setBackdrop(true);
                       await updateAlternativeDelivery({
                         id: order.id,
                         publicId,
                         alternativeDelivery: null,
                       });
+                      setBackdrop(false);
                     }}
                   >
                     {translations.cancelDeliveryToDifferentAddress}

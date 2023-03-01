@@ -8,6 +8,8 @@ import {
   Divider,
   Stack,
   IconButton,
+  CircularProgress,
+  Backdrop,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
@@ -28,6 +30,7 @@ import GEFlagIcon from "./translations/GEFlagIcon";
 function ClientView() {
   const sorting = [{ desc: false, id: "username" }];
   const [delivery, setDelivery] = useState({});
+  const [backdrop, setBackdrop] = useState(false);
   const theme = useTheme();
 
   const navigate = useNavigate();
@@ -60,6 +63,7 @@ function ClientView() {
         data?.delivery?.address === delivery?.address
       )
     ) {
+      setBackdrop(true);
       await updateDelivery({
         id: data?.deliveryId,
         publicId,
@@ -70,12 +74,19 @@ function ClientView() {
         address: delivery?.address,
       });
     }
+    setBackdrop(false);
   };
 
   const translations = language === "en" ? en : ka;
 
   return (
     <Box>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1000 }}
+        open={backdrop}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <IconButton
         sx={{ position: "absolute", right: "10px", top: "10px" }}
         onClick={() => {
@@ -179,7 +190,11 @@ function ClientView() {
               {translations.orderDetails}:
             </Typography>
             <Divider sx={{ mb: "1rem", mt: "0.5rem" }} />
-            <OrderList translations={translations} publicId={publicId} />
+            <OrderList
+              translations={translations}
+              publicId={publicId}
+              setBackdrop={setBackdrop}
+            />
           </Box>
         ) : (
           <Typography sx={{ mt: "1rem" }} variant="h3">
