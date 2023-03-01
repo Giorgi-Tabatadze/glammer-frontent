@@ -1,5 +1,3 @@
-import { MenuItem } from "@mui/material";
-
 function getColumns(getCommonEditTextFieldProps) {
   const columns = [
     {

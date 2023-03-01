@@ -14,11 +14,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  FormHelperText,
-  Backdrop,
-  styled,
 } from "@mui/material";
-import MaterialReactTable from "material-react-table";
 import { useAddNewProductInstanceMutation } from "../../state/api";
 
 // example of creating a mui dialog modal for creating new rows

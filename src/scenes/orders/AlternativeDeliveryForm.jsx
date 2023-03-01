@@ -1,20 +1,7 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  useTheme,
-  Button,
-  Typography,
-  Divider,
-  Stack,
-} from "@mui/material";
-import Autocomplete from "@mui/material/Autocomplete";
+import { Box, Button, Typography, Divider, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import {
-  useGetUsersQuery,
-  useAddNewUserMutation,
-  useUpdateDeliveryMutation,
-} from "../../state/api";
 
 function AlternativeDeliveryForm({
   alternativeDelivery,

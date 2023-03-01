@@ -15,7 +15,6 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import MaterialReactTable from "material-react-table";
 import { useAddNewScaccountMutation } from "../../state/api";
 
 // example of creating a mui dialog modal for creating new rows

@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 import MaterialReactTable from "material-react-table";
 import { Delete, Edit } from "@mui/icons-material";
-import Header from "../../components/Header";
 import {
   useGetProductInstancesQuery,
   useUpdateProductInstanceMutation,
