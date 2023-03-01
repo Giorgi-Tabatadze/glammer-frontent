@@ -9,8 +9,6 @@ function ProductInstanceTable({
   selectedProducInstances,
   setSelectedProductInstances,
 }) {
-  console.log(selectedProducInstances);
-
   const columns = useMemo(
     () => [
       {

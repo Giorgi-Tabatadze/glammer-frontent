@@ -82,7 +82,6 @@ function EditOrder() {
       setRequiredAlert(true);
     } else {
       setBackDropOn(true);
-      console.log(selectedUser);
 
       updateOrder({
         id: order?.id,

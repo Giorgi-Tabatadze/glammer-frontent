@@ -91,7 +91,6 @@ function EditProduct({ onSubmit, disabled }) {
     if (!data.id) {
       return;
     }
-    console.log(data);
     const formData = new FormData();
     if (file?.[0]) {
       formData.append("photo", file[0]);

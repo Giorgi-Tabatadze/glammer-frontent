@@ -7,8 +7,6 @@ function StartScraping() {
   const [startScrapingProcess, { data, error, isLoading, isFetching }] =
     useStartScrapingStatusMutation();
 
-  console.log(data);
-
   const handleQuery = async () => {
     await startScrapingProcess();
   };
