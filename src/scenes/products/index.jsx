@@ -11,6 +11,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useGetProductsQuery } from "../../state/api";
 import Header from "../../components/Header";
 import useAuth from "../../hooks/useAuth";
@@ -76,7 +77,7 @@ function Product({ id, price, imageSize, isAdmin }) {
 function Products() {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 12,
   });
   const { data, isLoading } = useGetProductsQuery({
     pagination,
@@ -116,30 +117,47 @@ function Products() {
       )}
 
       {data || !isLoading ? (
-        <Box
-          mt="20px"
-          display="grid"
-          gridTemplateColumns="repeat(3, minmax(0, 1fr))"
-          gridTemplateRows=""
-          justifyContent="space-between"
-          rowGap="20px"
-          columnGap=" 1.33%"
-          sx={{
-            "& > div": { gridColumn: isNonMobile ? undefined : "span 3" },
+        <InfiniteScroll
+          dataLength={data?.rows?.length} // This is important field to render the next data
+          next={() => {
+            setPagination({
+              ...pagination,
+              pageSize: pagination.pageSize + 12,
+            });
           }}
+          hasMore={data?.count > data?.rows?.length}
+          loader={<h4>loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>No More Products</b>
+            </p>
+          }
         >
-          {data?.map((product) => (
-            <Product
-              key={product?.id}
-              id={product?.id}
-              productCode={product?.productCode}
-              price={product?.price}
-              instagramUrl={product?.instagramUrl}
-              imageSize={imageSize}
-              isAdmin={isAdmin}
-            />
-          ))}
-        </Box>
+          <Box
+            mt="20px"
+            display="grid"
+            gridTemplateColumns="repeat(3, minmax(0, 1fr))"
+            gridTemplateRows=""
+            justifyContent="space-between"
+            rowGap="20px"
+            columnGap=" 1.33%"
+            sx={{
+              "& > div": { gridColumn: isNonMobile ? undefined : "span 3" },
+            }}
+          >
+            {data?.rows?.map((product) => (
+              <Product
+                key={product?.id}
+                id={product?.id}
+                productCode={product?.productCode}
+                price={product?.price}
+                instagramUrl={product?.instagramUrl}
+                imageSize={imageSize}
+                isAdmin={isAdmin}
+              />
+            ))}
+          </Box>
+        </InfiniteScroll>
       ) : (
         <>Loading...</>
       )}
