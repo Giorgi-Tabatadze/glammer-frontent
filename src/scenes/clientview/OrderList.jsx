@@ -206,7 +206,7 @@ function OrderList({ publicId, translations, setBackdrop }) {
                                 maxWidth: { xs: 50, md: 50 },
                               }}
                               alt="Product Image."
-                              src={`${process.env.REACT_APP_IMAGES_URL}/small/${productinstance.product.id}.jpg`}
+                              src={`${process.env.REACT_APP_IMAGES_URL}/${productinstance.product.id}small.jpg`}
                             />
                           </TableCell>
                           <TableCell>{productinstance.size}</TableCell>

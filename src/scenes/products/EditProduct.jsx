@@ -222,7 +222,7 @@ function EditProduct({ onSubmit, disabled }) {
             ) : (
               product && (
                 <img
-                  src={`${process.env.REACT_APP_IMAGES_URL}/large/${product[0].id}.jpg`}
+                  src={`${process.env.REACT_APP_IMAGES_URL}/${product[0].id}large.jpg`}
                   alt="preview"
                   style={{ maxWidth: "20%" }}
                 />

@@ -15,7 +15,7 @@ import { useGetProductsQuery } from "../../state/api";
 import Header from "../../components/Header";
 import useAuth from "../../hooks/useAuth";
 
-function Product({ id, price, imageLink, isAdmin }) {
+function Product({ id, price, imageSize, isAdmin }) {
   const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -31,7 +31,7 @@ function Product({ id, price, imageLink, isAdmin }) {
     >
       <CardMedia
         sx={{ width: "100%", aspectRatio: "1/1" }}
-        image={`${imageLink}/${id}.jpg`}
+        image={`${process.env.REACT_APP_IMAGES_URL}/${id}${imageSize}.jpg`}
         title={id}
         onClick={() => setIsExpanded(!isExpanded)}
       />
@@ -92,13 +92,13 @@ function Products() {
   );
   const isLargeScreen = useMediaQuery("(min-width: 960px)");
 
-  let imageLink;
+  let imageSize;
   if (isSmallScreen) {
-    imageLink = `${process.env.REACT_APP_IMAGES_URL}/small`;
+    imageSize = `small`;
   } else if (isMediumScreen) {
-    imageLink = `${process.env.REACT_APP_IMAGES_URL}/medium`;
+    imageSize = `medium`;
   } else {
-    imageLink = `${process.env.REACT_APP_IMAGES_URL}/large`;
+    imageSize = `large`;
   }
 
   return (
@@ -135,7 +135,7 @@ function Products() {
               productCode={product?.productCode}
               price={product?.price}
               instagramUrl={product?.instagramUrl}
-              imageLink={imageLink}
+              imageSize={imageSize}
               isAdmin={isAdmin}
             />
           ))}

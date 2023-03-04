@@ -118,7 +118,7 @@ function getColumns(data, setDeliveryDetails, navigate) {
             maxWidth: { xs: 30, md: 30 },
           }}
           alt="Product Image."
-          src={`${process.env.REACT_APP_IMAGES_URL}/small/${cell?.row?.original?.productId}.jpg`}
+          src={`${process.env.REACT_APP_IMAGES_URL}/${cell?.row?.original?.productId}small.jpg`}
         />
       ),
     },

@@ -13,7 +13,7 @@ import {
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { useGetProductsQuery } from "../../state/api";
 
-function Product({ product, cart, setCart, setSnackbar, imageLink }) {
+function Product({ product, cart, setCart, setSnackbar, imageSize }) {
   const { id, productCode } = product;
   const theme = useTheme();
 
@@ -40,7 +40,7 @@ function Product({ product, cart, setCart, setSnackbar, imageLink }) {
     >
       <CardMedia
         sx={{ width: "100%", aspectRatio: "1/1" }}
-        image={`${imageLink}/${id}.jpg`}
+        image={`${process.env.REACT_APP_IMAGES_URL}/${id}${imageSize}.jpg`}
         title={productCode}
       />
     </Card>
@@ -67,13 +67,13 @@ function NewOrderProducts({ setSelectedProductInstances }) {
   );
   const isLargeScreen = useMediaQuery("(min-width: 960px)");
 
-  let imageLink;
+  let imageSize;
   if (isSmallScreen) {
-    imageLink = `${process.env.REACT_APP_IMAGES_URL}/small`;
+    imageSize = `small`;
   } else if (isMediumScreen) {
-    imageLink = `${process.env.REACT_APP_IMAGES_URL}/medium`;
+    imageSize = `medium`;
   } else {
-    imageLink = `${process.env.REACT_APP_IMAGES_URL}/large`;
+    imageSize = `large`;
   }
 
   const handleSnackBarClose = (event, reason) => {
@@ -135,7 +135,7 @@ function NewOrderProducts({ setSelectedProductInstances }) {
               cart={cart}
               setCart={setCart}
               setSnackbar={setSnackbar}
-              imageLink={imageLink}
+              imageSize={imageSize}
             />
           ))}
         </Box>
