@@ -11,6 +11,7 @@ import {
   Snackbar,
 } from "@mui/material";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useGetProductsQuery } from "../../state/api";
 
 function Product({ product, cart, setCart, setSnackbar, imageSize }) {
@@ -116,29 +117,46 @@ function NewOrderProducts({ setSelectedProductInstances }) {
         </Badge>
       </IconButton>
       {data || !isLoading ? (
-        <Box
-          mt="20px"
-          display="grid"
-          gridTemplateColumns="repeat(3, minmax(0, 1fr))"
-          gridTemplateRows=""
-          justifyContent="space-between"
-          rowGap="20px"
-          columnGap=" 1.33%"
-          sx={{
-            "& > div": { gridColumn: isNonMobile ? undefined : "span 3" },
+        <InfiniteScroll
+          dataLength={data?.rows?.length} // This is important field to render the next data
+          next={() => {
+            setPagination({
+              ...pagination,
+              pageSize: pagination.pageSize + 12,
+            });
           }}
+          hasMore={data?.count > data?.rows?.length}
+          loader={<h4>loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>No More Products</b>
+            </p>
+          }
         >
-          {data?.map((product) => (
-            <Product
-              key={product?.id}
-              product={product}
-              cart={cart}
-              setCart={setCart}
-              setSnackbar={setSnackbar}
-              imageSize={imageSize}
-            />
-          ))}
-        </Box>
+          <Box
+            mt="20px"
+            display="grid"
+            gridTemplateColumns="repeat(3, minmax(0, 1fr))"
+            gridTemplateRows=""
+            justifyContent="space-between"
+            rowGap="20px"
+            columnGap=" 1.33%"
+            sx={{
+              "& > div": { gridColumn: isNonMobile ? undefined : "span 3" },
+            }}
+          >
+            {data?.rows?.map((product) => (
+              <Product
+                key={product?.id}
+                product={product}
+                cart={cart}
+                setCart={setCart}
+                setSnackbar={setSnackbar}
+                imageSize={imageSize}
+              />
+            ))}
+          </Box>
+        </InfiniteScroll>
       ) : (
         <>Loading...</>
       )}
