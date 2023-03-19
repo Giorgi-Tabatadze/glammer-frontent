@@ -48,6 +48,7 @@ function Orders() {
     setColumnFilters(filter);
     setPagination({ pageIndex: 0, pageSize: pagination.pageSize });
   };
+  console.log(productInstancesArray);
 
   const handleSaveCell = async (cell, value) => {
     // if using flat data and simple accessorKeys/ids, you can just do a simple assignment here

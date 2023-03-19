@@ -20,7 +20,7 @@ import {
 import {
   useUpdateProductMutation,
   useDeleteProductMutation,
-  useGetProductsQuery,
+  useGetProductByIdQuery,
 } from "../../state/api";
 import Header from "../../components/Header";
 
@@ -36,8 +36,7 @@ function EditProduct({ onSubmit, disabled }) {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const { data: product, isLoading } = useGetProductsQuery({
-    pagination,
+  const { data: product } = useGetProductByIdQuery({
     id,
   });
 
@@ -69,12 +68,12 @@ function EditProduct({ onSubmit, disabled }) {
   useEffect(() => {
     if (product) {
       reset({
-        price: product[0]?.price,
-        taobaoPrice: product[0]?.taobaoPrice,
-        shippingPrice: product[0]?.shippingPrice,
-        taobaoUrl: product[0]?.taobaoUrl || "",
-        instagramUrl: product[0]?.instagramUrl || "",
-        id: product[0]?.id,
+        price: product?.price,
+        taobaoPrice: product?.taobaoPrice,
+        shippingPrice: product?.shippingPrice,
+        taobaoUrl: product?.taobaoUrl || "",
+        instagramUrl: product?.instagramUrl || "",
+        id: product?.id,
       });
     }
   }, [product, reset]);
@@ -103,13 +102,13 @@ function EditProduct({ onSubmit, disabled }) {
   const handleDeleteProduct = async () => {
     if (
       !confirm(
-        `Are you sure you want to delete product with Id: ${product[0].id}?`,
+        `Are you sure you want to delete product with Id: ${product.id}?`,
       )
     ) {
       return "";
     }
     // send api delete request here, then refetch or update local table data for re-render
-    DeleteProduct({ id: product[0].id });
+    DeleteProduct({ id: product.id });
     navigate("/managment/products");
   };
 
@@ -222,7 +221,7 @@ function EditProduct({ onSubmit, disabled }) {
             ) : (
               product && (
                 <img
-                  src={`${process.env.REACT_APP_IMAGES_URL}/${product[0].id}large.jpg`}
+                  src={`${process.env.REACT_APP_IMAGES_URL}/${product?.id}large.jpg`}
                   alt="preview"
                   style={{ maxWidth: "20%" }}
                 />

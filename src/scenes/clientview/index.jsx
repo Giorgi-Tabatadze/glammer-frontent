@@ -97,7 +97,7 @@ function ClientView() {
       </IconButton>
       <Box m="3rem 2.5rem">
         <Header
-          title={`${translations.welcome} ${data?.username}!`}
+          title={`${translations.welcome} ${data?.username || ""}!`}
           subtitle={`${translations.subtitle}`}
         />
 

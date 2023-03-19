@@ -50,7 +50,9 @@ function getColumns(data, setDeliveryDetails, navigate) {
       header: "Order",
       enableEditing: false, // disable editing on this column
       size: 20,
-      Cell: ({ cell }) => {
+      Cell: ({ cell, row }) => {
+        const isExpanded = row.getIsExpanded();
+
         let rowNeeded = "";
         data?.rows?.forEach((row) => {
           // eslint-disable-next-line eqeqeq
@@ -64,46 +66,52 @@ function getColumns(data, setDeliveryDetails, navigate) {
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Typography>{rowNeeded?.user?.username}</Typography>
             <Typography>ID: {rowNeeded?.id}</Typography>
-            <Button
-              sx={{ mt: "0.5rem" }}
-              color="secondary"
-              variant="contained"
-              onClick={() =>
-                setDeliveryDetails({
-                  username: rowNeeded?.user?.username,
-                  delivery,
-                  alternativeDelivery,
-                })
-              }
-            >
-              Delivery Details
-            </Button>
-            <Button
-              sx={{ mt: "0.5rem" }}
-              color="secondary"
-              variant="contained"
-              onClick={() => navigate(`/managment/orders/${rowNeeded?.id}`)}
-            >
-              Edit Order
-            </Button>
-            <Button
-              sx={{ mt: "0.5rem" }}
-              color="secondary"
-              variant="contained"
-              onClick={() =>
-                copy(
-                  `${process.env.REACT_APP_DOMAIN}/#/clientview/${rowNeeded?.user.publicId}/ka`,
-                )
-              }
-            >
-              Copy User Link
-            </Button>
+            {isExpanded && (
+              <>
+                <Button
+                  sx={{ mt: "0.5rem" }}
+                  color="secondary"
+                  variant="contained"
+                  onClick={() =>
+                    setDeliveryDetails({
+                      username: rowNeeded?.user?.username,
+                      delivery,
+                      alternativeDelivery,
+                    })
+                  }
+                >
+                  Delivery Details
+                </Button>
+                <Button
+                  sx={{ mt: "0.5rem" }}
+                  color="secondary"
+                  variant="contained"
+                  onClick={() => navigate(`/managment/orders/${rowNeeded?.id}`)}
+                >
+                  Edit Order
+                </Button>
+                <Button
+                  sx={{ mt: "0.5rem" }}
+                  color="secondary"
+                  variant="contained"
+                  onClick={() =>
+                    copy(
+                      `${process.env.REACT_APP_DOMAIN}/#/clientview/${rowNeeded?.user.publicId}/ka`,
+                    )
+                  }
+                >
+                  Copy User Link
+                </Button>
+              </>
+            )}
           </Box>
         );
       },
     },
     {
       accessorKey: "product.thumbnail",
+      accessorFn: (row) => row?.product?.thumbnail,
+
       header: "thumbnail",
       enableEditing: false, // disable editing on this column
       enableColumnFilter: false,
@@ -219,6 +227,22 @@ function getColumns(data, setDeliveryDetails, navigate) {
       accessorKey: "tracking.estimatedArrival",
       accessorFn: (row) => row?.tracking?.estimatedArrival,
       header: "Estimated Arrival",
+      size: 20,
+      enableSorting: false,
+      enableEditing: false, // disable editing on this column
+    },
+    {
+      accessorKey: "tracking.arrivedDate",
+      accessorFn: (row) => row?.tracking?.arrivedDate,
+      header: "Arrived Date",
+      size: 20,
+      enableSorting: false,
+      enableEditing: false, // disable editing on this column
+    },
+    {
+      accessorKey: "tracking.flightNumber",
+      accessorFn: (row) => row?.tracking?.flightNumber,
+      header: "Flight Number",
       size: 20,
       enableSorting: false,
       enableEditing: false, // disable editing on this column

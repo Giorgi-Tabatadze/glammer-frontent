@@ -53,6 +53,10 @@ export const api = createApi({
         }`,
       providesTags: ["Products"],
     }),
+    getProductById: build.query({
+      query: ({ id }) => `products/${id}`,
+      providesTags: ["ProductById"],
+    }),
     getUsers: build.query({
       query: ({ pagination, columnFilters, globalFilter, sorting }) => {
         return `users/?limit=${pagination?.pageSize}&page=${
@@ -96,6 +100,12 @@ export const api = createApi({
         return `clientviews/orders/?publicId=${publicId}&limit=${pagination?.pageSize}&page=${pagination?.pageIndex}`;
       },
       providesTags: ["ClientViewOrders"],
+    }),
+    getMostRecentlyUpdatedTracking: build.query({
+      query: () => {
+        return `trackings/scraper`;
+      },
+      providesTags: ["MostRecentlyUpdatedTracking"],
     }),
     addNewUser: build.mutation({
       query: (initialUser) => ({
@@ -265,7 +275,7 @@ export const api = createApi({
     }),
     StartScrapingStatus: build.mutation({
       query: () => ({
-        url: "trackings/startscrape",
+        url: "trackings/scraper",
         method: "PATCH",
         body: {},
       }),
@@ -275,12 +285,14 @@ export const api = createApi({
 
 export const {
   useGetProductsQuery,
+  useGetProductByIdQuery,
   useGetUsersQuery,
   useGetProductInstancesQuery,
   useGetOrdersQuery,
   useGetScaccountsQuery,
   useGetClientViewUserQuery,
   useGetClientViewOrdersQuery,
+  useGetMostRecentlyUpdatedTrackingQuery,
   useAddNewUserMutation,
   useAddNewProductMutation,
   useAddNewProductInstanceMutation,
